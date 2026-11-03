@@ -119,9 +119,9 @@ function analyzeMessage(text) {
 }
 
 function riskVerdict(score) {
-  if (score >= 55) return { tone: "danger", label: "🚨 High risk — likely a scam", score };
-  if (score >= 25) return { tone: "warn", label: "⚠️ Suspicious — be careful", score };
-  return { tone: "safe", label: "✅ Looks safe", score };
+  if (score >= 55) return { tone: "danger", label: "High risk — likely a scam", score };
+  if (score >= 25) return { tone: "warn", label: "Suspicious — be careful", score };
+  return { tone: "safe", label: "Looks safe", score };
 }
 
 /* ================= PDF scanner (pure) ================= */
@@ -169,7 +169,7 @@ function renderVerdict(el, v) {
     <div class="verdict-top"><span class="verdict-label">${esc(v.label)}</span>${v.score != null ? `<span class="verdict-score">Risk score: ${v.score}/100</span>` : ""}</div>
     ${v.why ? `<p class="verdict-why">${esc(v.why)}</p>` : ""}
     ${v.extra || ""}
-    ${v.findings && v.findings.length ? `<ul class="findings">${v.findings.map(f => `<li class="${f.level}">${f.level === "bad" ? "🔴" : f.level === "mid" ? "🟡" : "🟢"} ${esc(f.text)}</li>`).join("")}</ul>` : ""}
+    ${v.findings && v.findings.length ? `<ul class="findings">${v.findings.map(f => `<li class="${f.level}">${f.level === "bad" ? "✕" : f.level === "mid" ? "!" : "✓"} ${esc(f.text)}</li>`).join("")}</ul>` : ""}
   </div>`;
 }
 function renderError(el, msg) { el.innerHTML = `<div class="error">${esc(msg)}</div>`; }
@@ -202,9 +202,9 @@ async function apiAnalyze(payload) {
   return data;
 }
 function mediaVerdict(data) {
-  if (data.verdict === "ai") return { tone: "danger", label: "🚨 Likely AI-generated / fake", score: data.confidence, why: data.summary, findings: (data.signs || []).map(s => ({ level: "bad", text: s })) };
-  if (data.verdict === "real") return { tone: "safe", label: "✅ Likely real", score: 100 - (data.confidence || 50), why: data.summary, findings: (data.signs || []).map(s => ({ level: "good", text: s })) };
-  return { tone: "warn", label: "⚠️ Uncertain — inspect carefully", score: data.confidence, why: data.summary, findings: (data.signs || []).map(s => ({ level: "mid", text: s })) };
+  if (data.verdict === "ai") return { tone: "danger", label: "Likely AI-generated / fake", score: data.confidence, why: data.summary, findings: (data.signs || []).map(s => ({ level: "bad", text: s })) };
+  if (data.verdict === "real") return { tone: "safe", label: "Likely real", score: 100 - (data.confidence || 50), why: data.summary, findings: (data.signs || []).map(s => ({ level: "good", text: s })) };
+  return { tone: "warn", label: "Uncertain — inspect carefully", score: data.confidence, why: data.summary, findings: (data.signs || []).map(s => ({ level: "mid", text: s })) };
 }
 
 /* ---------- Image ---------- */
@@ -327,9 +327,9 @@ $("#qrFile").addEventListener("change", async (e) => {
       if (r) { const v = riskVerdict(r.score); v.why = r.score >= 25 ? "This QR leads somewhere suspicious — do NOT scan it with your banking or wallet app." : "The address inside this QR shows no phishing signs. Still check the name shown by your payment app before paying."; v.findings = r.findings; v.extra = extra; return renderVerdict(el, v); }
     }
     if (/^(WIFI|BEGIN:VCARD|SMSTO|tel:|mailto:)/i.test(content)) {
-      return renderVerdict(el, { tone: "warn", label: "ℹ️ Not a web link", score: null, why: "This QR holds contact / Wi-Fi / message data rather than a website. Only accept it from people you trust.", findings: [], extra });
+      return renderVerdict(el, { tone: "warn", label: "Not a web link", score: null, why: "This QR holds contact / Wi-Fi / message data rather than a website. Only accept it from people you trust.", findings: [], extra });
     }
-    renderVerdict(el, { tone: "warn", label: "ℹ️ Plain text inside", score: null, why: "This QR just contains text — no link to check. Read it above and judge it like any message.", findings: [], extra });
+    renderVerdict(el, { tone: "warn", label: "Plain text inside", score: null, why: "This QR just contains text — no link to check. Read it above and judge it like any message.", findings: [], extra });
   };
   img.src = dataUrl;
 });

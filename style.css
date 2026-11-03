@@ -179,3 +179,12 @@ footer { border-top: 1px solid var(--line); margin-top: 38px; padding: 18px 0 28
 footer strong { color: var(--ink); }
 
 .hidden { display: none !important; }
+
+/* v3 — editorial details */
+.hero h1::before { content: ""; display: block; width: 34px; height: 4px; background: var(--teal); margin-bottom: 18px; }
+.drop-icon { display: none; }
+.plain-list { border-top: 1px solid var(--line); }
+.plain-list > div { display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.plain-list dt { font-family: var(--mono); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--teal); padding-top: 2px; }
+.plain-list dd { color: var(--muted); font-size: 14.5px; }
+.findings li { font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }

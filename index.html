@@ -11,14 +11,6 @@
 </head>
 <body>
 
-<div id="splash" class="splash">
-  <div class="logo-stage">
-    <div class="logo-ring"></div>
-    <img class="logo-big" src="logo.svg" alt="ScamShield">
-  </div>
-  <div class="splash-name">ScamShield</div>
-</div>
-
 <header class="topbar">
   <div class="wrap topbar-in">
     <div class="brand">
@@ -35,26 +27,25 @@
 <main class="wrap">
 
   <section class="hero">
-    <h1>Real or <span class="grad">fake?</span> Find out in seconds.</h1>
-    <p class="hero-sub">Check a photo, a video, a suspicious link, a QR code, a PDF file or a GitHub repo. ScamShield spots deepfakes, AI-generated media, phishing scams and dangerous files — before they fool you.</p>
+    <h1>Check if it's <span class="grad">fake.</span></h1>
+    <p class="hero-sub">Six quick checks for the stuff that fools people: AI photos, deepfake videos, phishing links, QR codes, dodgy PDFs and GitHub repos. No account, no cost — most checks run right on your device.</p>
   </section>
 
   <nav class="tool-tabs" id="toolTabs">
-    <button class="tool-tab active" data-tool="image">🖼️ Image</button>
-    <button class="tool-tab" data-tool="video">🎬 Video</button>
-    <button class="tool-tab" data-tool="link">🔗 Link &amp; Message</button>
-    <button class="tool-tab" data-tool="qr">📷 QR Code</button>
-    <button class="tool-tab" data-tool="pdf">📄 PDF</button>
-    <button class="tool-tab" data-tool="repo">💻 Repo</button>
+    <button class="tool-tab active" data-tool="image">Image</button>
+    <button class="tool-tab" data-tool="video">Video</button>
+    <button class="tool-tab" data-tool="link">Link &amp; Message</button>
+    <button class="tool-tab" data-tool="qr">QR Code</button>
+    <button class="tool-tab" data-tool="pdf">PDF</button>
+    <button class="tool-tab" data-tool="repo">Repo</button>
   </nav>
 
   <!-- IMAGE -->
   <section class="panel tool-pane" id="pane-image">
     <h2>AI Image &amp; Deepfake Check</h2>
-    <p class="pane-sub">Upload a photo and ScamShield's AI examines it for signs of AI generation or face-swap manipulation.</p>
+    <p class="pane-sub">Upload a photo. The AI looks for the usual giveaways: warped hands, plastic skin, bent text, seams around faces.</p>
     <label class="drop" for="imageFile">
       <input type="file" id="imageFile" accept="image/*" hidden>
-      <span class="drop-icon">🖼️</span>
       <span class="drop-text">Tap to choose an image, or drop it here</span>
       <span class="drop-hint">JPG, PNG, WebP — stays on your device until you check it</span>
     </label>
@@ -66,10 +57,9 @@
   <!-- VIDEO -->
   <section class="panel tool-pane hidden" id="pane-video">
     <h2>AI Video &amp; Deepfake Check</h2>
-    <p class="pane-sub">Upload a video — ScamShield samples frames from it and the AI inspects them for deepfake and AI-generation signs.</p>
+    <p class="pane-sub">Upload a video. A few frames are pulled out and checked for face-swap seams and features that shift between frames.</p>
     <label class="drop" for="videoFile">
       <input type="file" id="videoFile" accept="video/*" hidden>
-      <span class="drop-icon">🎬</span>
       <span class="drop-text">Tap to choose a video, or drop it here</span>
       <span class="drop-hint">MP4, WebM — short clips work best (under ~1 minute)</span>
     </label>
@@ -81,7 +71,7 @@
   <!-- LINK -->
   <section class="panel tool-pane hidden" id="pane-link">
     <h2>Phishing Link &amp; Scam Message Check</h2>
-    <p class="pane-sub">Paste a suspicious link — or a whole WhatsApp / SMS / email message — and ScamShield analyses it for phishing tricks.</p>
+    <p class="pane-sub">Paste the link, or paste the whole WhatsApp / SMS / email message. It gets pulled apart and checked piece by piece.</p>
     <textarea id="linkInput" rows="4" placeholder="Paste a link like https://… or paste the full suspicious message here"></textarea>
     <button class="action-btn" id="linkCheckBtn">Check it now</button>
     <div id="linkResult"></div>
@@ -90,10 +80,9 @@
   <!-- QR -->
   <section class="panel tool-pane hidden" id="pane-qr">
     <h2>QR Code Safety Check</h2>
-    <p class="pane-sub">Upload a photo or screenshot of a QR code. ScamShield reads what's hidden inside it and checks it — without ever opening it.</p>
+    <p class="pane-sub">Upload a photo or screenshot of a QR code. You see what's inside it first — nothing gets opened.</p>
     <label class="drop" for="qrFile">
       <input type="file" id="qrFile" accept="image/*" hidden>
-      <span class="drop-icon">📷</span>
       <span class="drop-text">Tap to choose a QR image, or drop it here</span>
       <span class="drop-hint">A photo of a payment QR, a screenshot — anything with a QR code</span>
     </label>
@@ -104,10 +93,9 @@
   <!-- PDF -->
   <section class="panel tool-pane hidden" id="pane-pdf">
     <h2>Malicious PDF Check</h2>
-    <p class="pane-sub">Upload a PDF and ScamShield scans its structure for hidden JavaScript, auto-run actions, embedded files and suspicious links — the tricks malicious PDFs use.</p>
+    <p class="pane-sub">Upload a PDF. Its structure is searched for the things malicious PDFs hide: scripts, auto-run actions, embedded files, bad links.</p>
     <label class="drop" for="pdfFile">
       <input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden>
-      <span class="drop-icon">📄</span>
       <span class="drop-text">Tap to choose a PDF, or drop it here</span>
       <span class="drop-hint">Scanned on your device — the file is never uploaded</span>
     </label>
@@ -117,7 +105,7 @@
   <!-- REPO -->
   <section class="panel tool-pane hidden" id="pane-repo">
     <h2>GitHub Repo Safety Test</h2>
-    <p class="pane-sub">Paste a public GitHub repository link. ScamShield inspects its file list, install scripts, workflows and release files for planted malware, backdoor scripts and fake-download tricks.</p>
+    <p class="pane-sub">Paste a public GitHub repo link. Its files, install scripts, workflows and release downloads get checked for planted malware.</p>
     <input type="text" id="repoInput" class="text-input" placeholder="https://github.com/owner/repository">
     <button class="action-btn" id="repoCheckBtn">Test this repo</button>
     <div id="repoResult"></div>
@@ -132,20 +120,20 @@
   </section>
 
   <section class="how">
-    <h2>How ScamShield protects you</h2>
-    <div class="how-grid">
-      <div class="how-card"><div class="num">🛡️</div><h3>Deepfake detection</h3><p>AI vision inspects faces, skin, lighting and artefacts that give AI-generated photos and videos away.</p></div>
-      <div class="how-card"><div class="num">🎣</div><h3>Phishing exposed</h3><p>Look-alike domains, hidden redirects, fake brand names and pressure tricks — the signs scammers rely on, flagged one by one.</p></div>
-      <div class="how-card"><div class="num">🔒</div><h3>Private by design</h3><p>Links, QR codes and PDFs are analysed on your own device. Media checks send only what's needed for the AI verdict.</p></div>
-    </div>
+    <h2>What gets checked</h2>
+    <dl class="plain-list">
+      <div><dt>Media</dt><dd>Photos and video frames are checked by AI vision for generation artefacts and face-swap signs.</dd></div>
+      <div><dt>Links &amp; QR</dt><dd>Addresses are checked against the tricks phishers use: look-alike names, hidden destinations, pressure wording. QR codes are read, never opened.</dd></div>
+      <div><dt>Files &amp; repos</dt><dd>PDFs are scanned on your device. Repos are checked file by file — scripts, workflows and release downloads included.</dd></div>
+    </dl>
   </section>
 
-  <p class="honest">Honest note: no detector is 100% certain. Treat a "fake" verdict as a strong warning and a "real" verdict as a good sign — not a guarantee. When money or safety is involved, verify through an official channel.</p>
+  <p class="honest">Note: no detector is 100% certain. Treat results as strong hints, not proof — and when money is involved, verify through the official app or number yourself.</p>
 
 </main>
 
 <footer>
-  <div class="wrap">Built by <strong>Asad Imran</strong> · Frontend Developer &amp; AI Creator · ScamShield — see through the fakes.</div>
+  <div class="wrap">Built by <strong>Asad Imran</strong> · Frontend Developer &amp; AI Creator · Karachi, Pakistan</div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>

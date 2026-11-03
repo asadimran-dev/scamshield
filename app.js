@@ -1,4 +1,4 @@
-// TrueScan — frontend. Link engine + PDF scanner are pure logic (tested offline).
+// ScamShield — frontend. Link engine + PDF scanner are pure logic (tested offline).
 "use strict";
 
 /* ================= Link / phishing engine (pure) ================= */
@@ -160,7 +160,7 @@ function scanPdfText(text) {
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const loadingEl = $("#loading"), loadingText = $("#loadingText");
-function showLoading(t) { loadingText.textContent = t || "TrueScan is analysing…"; loadingEl.classList.remove("hidden"); }
+function showLoading(t) { loadingText.textContent = t || "ScamShield is analysing…"; loadingEl.classList.remove("hidden"); }
 function hideLoading() { loadingEl.classList.add("hidden"); }
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 
@@ -223,7 +223,7 @@ $("#imageFile").addEventListener("change", async (e) => {
 });
 $("#imageCheckBtn").addEventListener("click", async () => {
   if (!imageData) return;
-  const btn = $("#imageCheckBtn"); btn.disabled = true; showLoading("TrueScan AI is examining the image…");
+  const btn = $("#imageCheckBtn"); btn.disabled = true; showLoading("ScamShield AI is examining the image…");
   try {
     const data = await apiAnalyze({ kind: "image", mime: imageData.split(";")[0].split(":")[1] || "image/jpeg", data: imageData.split(",")[1] });
     renderVerdict($("#imageResult"), mediaVerdict(data));
@@ -274,7 +274,7 @@ function extractFrames(url) {
 }
 $("#videoCheckBtn").addEventListener("click", async () => {
   if (!videoFrames) return;
-  const btn = $("#videoCheckBtn"); btn.disabled = true; showLoading("TrueScan AI is examining the video frames…");
+  const btn = $("#videoCheckBtn"); btn.disabled = true; showLoading("ScamShield AI is examining the video frames…");
   try {
     const data = await apiAnalyze({ kind: "video", frames: videoFrames });
     renderVerdict($("#videoResult"), mediaVerdict(data));
@@ -356,7 +356,7 @@ $("#repoCheckBtn").addEventListener("click", async () => {
   const val = $("#repoInput").value.trim();
   const el = $("#repoResult");
   if (!val) return renderError(el, "Paste a GitHub repo link first — e.g. https://github.com/owner/repository");
-  const btn = $("#repoCheckBtn"); btn.disabled = true; showLoading("TrueScan is inspecting the repo's files and scripts…");
+  const btn = $("#repoCheckBtn"); btn.disabled = true; showLoading("ScamShield is inspecting the repo's files and scripts…");
   try {
     const res = await fetch("/api/repo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ repo: val }) });
     const data = await res.json().catch(() => ({}));

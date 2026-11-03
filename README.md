@@ -1,4 +1,4 @@
-# TrueScan — AI Fake & Scam Detector
+# ScamShield — AI Fake & Scam Detector
 
 One free tool that checks six things:
 

@@ -1,0 +1,27 @@
+name: Extract zip
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/extract.yml']
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract and commit site files
+        run: |
+          ls -la
+          unzip -o truescan.zip -d extracted
+          ls -R extracted | head -n 100
+          if [ -f extracted/index.html ]; then cp -r extracted/. .; else for d in extracted/*/; do if [ -f "$d/index.html" ]; then cp -r "$d". .; break; fi; done; fi
+          rm -rf extracted truescan.zip .github
+          ls -la
+          ls -R api || true
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -A
+          git status --short
+          git commit -m "Extract TrueScan site files" || echo "nothing to commit"
+          git push

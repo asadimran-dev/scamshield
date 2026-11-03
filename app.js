@@ -191,6 +191,22 @@ $$(".drop").forEach(d => {
   });
 });
 
+function toJpegPayload(dataUrl) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 1024 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.naturalWidth * scale);
+      c.height = Math.round(img.naturalHeight * scale);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      const out = c.toDataURL("image/jpeg", 0.85);
+      resolve({ mime: "image/jpeg", data: out.split(",")[1] });
+    };
+    img.onerror = () => resolve({ mime: (dataUrl.split(";")[0].split(":")[1] || "image/jpeg"), data: dataUrl.split(",")[1] });
+    img.src = dataUrl;
+  });
+}
 function fileMeta(f) { return `${f.name} · ${(f.size / 1024).toFixed(0)} KB · ${f.type || "unknown type"}`; }
 function readAsDataURL(f) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(f); }); }
 function readAsText(f) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsText(f, "latin1"); }); }
@@ -225,7 +241,8 @@ $("#imageCheckBtn").addEventListener("click", async () => {
   if (!imageData) return;
   const btn = $("#imageCheckBtn"); btn.disabled = true; showLoading("ScamShield AI is examining the image…");
   try {
-    const data = await apiAnalyze({ kind: "image", mime: imageData.split(";")[0].split(":")[1] || "image/jpeg", data: imageData.split(",")[1] });
+    const payload = await toJpegPayload(imageData);
+    const data = await apiAnalyze({ kind: "image", mime: payload.mime, data: payload.data });
     renderVerdict($("#imageResult"), mediaVerdict(data));
   } catch (err) { renderError($("#imageResult"), err.message); }
   finally { hideLoading(); btn.disabled = false; }
